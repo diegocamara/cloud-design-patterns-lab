@@ -1,0 +1,166 @@
+# =========================
+# OS files
+# =========================
+
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+
+# =========================
+# IDEs / Editors
+# =========================
+
+.idea/
+*.iml
+*.iws
+*.ipr
+
+.vscode/
+!.vscode/extensions.json
+!.vscode/settings.json
+
+.project
+.classpath
+.settings/
+
+
+# =========================
+# Java / JVM
+# =========================
+
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+
+hs_err_pid*
+replay_pid*
+
+target/
+build/
+out/
+
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+.gradle/
+gradle-app.setting
+!gradle-wrapper.jar
+
+
+# =========================
+# Spring Boot
+# =========================
+
+application-local.yml
+application-local.yaml
+application-dev-local.yml
+application-dev-local.yaml
+
+*.log
+
+
+# =========================
+# Environment / Secrets
+# =========================
+
+.env
+.env.*
+!.env.example
+
+*.pem
+*.key
+*.crt
+*.p12
+*.jks
+
+secrets/
+credentials/
+config/secrets/
+
+
+# =========================
+# Docker / Local volumes
+# =========================
+
+docker-compose.override.yml
+
+data/
+volumes/
+tmp/
+
+
+# =========================
+# Databases / Local state
+# =========================
+
+*.db
+*.sqlite
+*.sqlite3
+
+postgres-data/
+mysql-data/
+redis-data/
+rabbitmq-data/
+kafka-data/
+zookeeper-data/
+
+
+# =========================
+# Logs / Reports
+# =========================
+
+logs/
+*.log
+*.out
+*.err
+
+coverage/
+test-output/
+surefire-reports/
+failsafe-reports/
+
+
+# =========================
+# Node / Frontend
+# =========================
+
+node_modules/
+dist/
+.next/
+.nuxt/
+.cache/
+.parcel-cache/
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+
+# =========================
+# OpenTelemetry / Observability local files
+# =========================
+
+prometheus-data/
+grafana-data/
+tempo-data/
+loki-data/
+
+
+# =========================
+# Misc
+# =========================
+
+*.bak
+*.swp
+*.swo
+*~
