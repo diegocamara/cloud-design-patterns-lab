@@ -108,6 +108,134 @@ public class RetryPatternCasesTests {
     Assertions.assertEquals("tx-123", result.transactionId());
     Assertions.assertEquals(PaymentStatus.APPROVED, result.status());
 
-    paymentsServer.verify(3, postRequestedFor(urlEqualTo(PAYMENTS_URL)));
+    this.paymentsServer.verify(3, postRequestedFor(urlEqualTo(PAYMENTS_URL)));
+  }
+
+  @Test
+  void shouldThrowExceptionWhenAllRetryAttemptsAreExhausted() {
+
+    this.paymentsServer.stubFor(post(urlEqualTo(PAYMENTS_URL)).willReturn(serverError()));
+
+    final var retryConfig =
+        RetryConfig.custom()
+            .maxAttempts(3)
+            .waitDuration(Duration.ofMillis(100))
+            .retryExceptions(OkHttpPaymentGateway.PaymentProviderUnavailableException.class)
+            .build();
+
+    final var retry = Retry.of("payment-provider", retryConfig);
+
+    PaymentGateway paymentGatewayWithRetry =
+        paymentRequest ->
+            Retry.decorateSupplier(retry, () -> paymentsGateway.process(paymentRequest)).get();
+
+    var request =
+        new PaymentRequest(
+            UUID.randomUUID(),
+            new BigDecimal("199.90"),
+            Currency.getInstance("BRL"),
+            "order-" + UUID.randomUUID());
+
+    Assertions.assertThrows(
+        OkHttpPaymentGateway.PaymentProviderUnavailableException.class,
+        () -> paymentGatewayWithRetry.process(request));
+
+    this.paymentsServer.verify(3, postRequestedFor(urlEqualTo(PAYMENTS_URL)));
+  }
+
+  @Test
+  void shouldNotRetryWhenPaymentIsRejectedByProvider() {
+
+    this.paymentsServer.stubFor(post(urlEqualTo(PAYMENTS_URL)).willReturn(status(400)));
+
+    final var retryConfig =
+        RetryConfig.custom()
+            .maxAttempts(3)
+            .waitDuration(Duration.ofMillis(100))
+            .retryExceptions(OkHttpPaymentGateway.PaymentProviderUnavailableException.class)
+            .ignoreExceptions(OkHttpPaymentGateway.PaymentRejectedException.class)
+            .build();
+
+    final var retry = Retry.of("payment-provider", retryConfig);
+
+    PaymentGateway paymentGatewayWithRetry =
+        paymentRequest ->
+            Retry.decorateSupplier(retry, () -> paymentsGateway.process(paymentRequest)).get();
+
+    var request =
+        new PaymentRequest(
+            UUID.randomUUID(),
+            new BigDecimal("199.90"),
+            Currency.getInstance("BRL"),
+            "order-" + UUID.randomUUID());
+
+    Assertions.assertThrows(
+        OkHttpPaymentGateway.PaymentRejectedException.class,
+        () -> paymentGatewayWithRetry.process(request));
+
+    this.paymentsServer.verify(1, postRequestedFor(urlEqualTo(PAYMENTS_URL)));
+  }
+
+  @Test
+  void shouldSendSameIdempotencyKeyOnEveryRetryAttempt() {
+
+    this.paymentsServer.stubFor(
+        post(PAYMENTS_URL)
+            .inScenario("Payment provider temporary failure")
+            .whenScenarioStateIs(STARTED)
+            .willReturn(serverError())
+            .willSetStateTo("second attempt"));
+
+    this.paymentsServer.stubFor(
+        post(PAYMENTS_URL)
+            .inScenario("Payment provider temporary failure")
+            .whenScenarioStateIs("second attempt")
+            .willReturn(serverError())
+            .willSetStateTo("third attempt"));
+
+    this.paymentsServer.stubFor(
+        post(PAYMENTS_URL)
+            .inScenario("Payment provider temporary failure")
+            .whenScenarioStateIs("third attempt")
+            .willReturn(
+                okJson(
+                    """
+                                                    {
+                                                      "transactionId": "tx-123",
+                                                      "status": "APPROVED"
+                                                    }
+                                                    """)));
+
+    final var retryConfig =
+        RetryConfig.custom()
+            .maxAttempts(3)
+            .waitDuration(Duration.ofMillis(100))
+            .retryExceptions(OkHttpPaymentGateway.PaymentProviderUnavailableException.class)
+            .ignoreExceptions(OkHttpPaymentGateway.PaymentRejectedException.class)
+            .build();
+
+    final var retry = Retry.of("payment-provider", retryConfig);
+
+    PaymentGateway paymentGatewayWithRetry =
+        paymentRequest ->
+            Retry.decorateSupplier(retry, () -> paymentsGateway.process(paymentRequest)).get();
+
+    var request =
+        new PaymentRequest(
+            UUID.randomUUID(),
+            new BigDecimal("199.90"),
+            Currency.getInstance("BRL"),
+            "order-" + UUID.randomUUID());
+
+    final var result = paymentGatewayWithRetry.process(request);
+
+    Assertions.assertEquals("tx-123", result.transactionId());
+    Assertions.assertEquals(PaymentStatus.APPROVED, result.status());
+
+    this.paymentsServer.verify(
+        3,
+        postRequestedFor(urlEqualTo(PAYMENTS_URL))
+            .withRequestBody(
+                matchingJsonPath("$.idempotencyKey", equalTo(request.idempotencyKey()))));
   }
 }
