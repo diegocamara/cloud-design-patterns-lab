@@ -2,9 +2,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.example</groupId>
-    <artifactId>01-retry</artifactId>
+    <artifactId>02-circuit-breaker</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>Archetype - 01-retry</name>
+    <name>Archetype - 02-circuit-breaker</name>
     <url>http://maven.apache.org</url>
 
     <properties>
