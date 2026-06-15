@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: 04-queue-based-load-leveling
+
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/orders_db}
+    username: ${DATABASE_USERNAME:orders_user}
+    password: ${DATABASE_PASSWORD:orders_pass}
+
+  rabbitmq:
+    host: ${RABBITMQ_HOST:localhost}
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_USERNAME:orders_user}
+    password: ${RABBITMQ_PASSWORD:orders_pass}
+    virtual-host: ${RABBITMQ_VHOST:orders}

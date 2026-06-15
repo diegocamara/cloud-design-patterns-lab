@@ -1,0 +1,84 @@
+{
+  "users": [
+    {
+      "name": "orders_user",
+      "password_hash": "Uuskb4gHGoYIJGaCoLH2rFe+R/MbeB9wMO1xBmKCFni/dEl/",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": [
+        "administrator"
+      ],
+      "limits": {}
+    }
+  ],
+  "vhosts": [
+    {
+      "name": "orders"
+    }
+  ],
+  "permissions": [
+    {
+      "user": "orders_user",
+      "vhost": "orders",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    }
+  ],
+  "exchanges": [
+    {
+      "name": "orders.exchange",
+      "vhost": "orders",
+      "type": "direct",
+      "durable": true,
+      "auto_delete": false,
+      "internal": false,
+      "arguments": {}
+    },
+    {
+      "name": "orders.dlx",
+      "vhost": "orders",
+      "type": "direct",
+      "durable": true,
+      "auto_delete": false,
+      "internal": false,
+      "arguments": {}
+    }
+  ],
+  "queues": [
+    {
+      "name": "orders.create.requested.queue",
+      "vhost": "orders",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {
+        "x-dead-letter-exchange": "orders.dlx",
+        "x-dead-letter-routing-key": "orders.create.requested.dead"
+      }
+    },
+    {
+      "name": "orders.create.requested.dlq",
+      "vhost": "orders",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {}
+    }
+  ],
+  "bindings": [
+    {
+      "source": "orders.exchange",
+      "vhost": "orders",
+      "destination": "orders.create.requested.queue",
+      "destination_type": "queue",
+      "routing_key": "orders.create.requested",
+      "arguments": {}
+    },
+    {
+      "source": "orders.dlx",
+      "vhost": "orders",
+      "destination": "orders.create.requested.dlq",
+      "destination_type": "queue",
+      "routing_key": "orders.create.requested.dead",
+      "arguments": {}
+    }
+  ]
+}

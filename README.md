@@ -11,6 +11,7 @@ The idea is to add subprojects gradually as each pattern is studied. Each folder
 | [01-retry](./01-retry) | Retry |
 | [02-circuit-breaker](./02-circuit-breaker) | Circuit Breaker |
 | [03-bulkhead](./03-bulkhead) | Bulkhead |
+| [04-queue-based-load-leveling](./04-queue-based-load-leveling) | Queue-Based Load Leveling |
 
 ## Goal
 

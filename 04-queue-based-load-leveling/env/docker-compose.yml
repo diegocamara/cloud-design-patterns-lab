@@ -1,0 +1,24 @@
+services:
+  postgres:
+    image: postgres:18.4-alpine
+    environment:
+      POSTGRES_DB: orders_db
+      POSTGRES_USER: orders_user
+      POSTGRES_PASSWORD: orders_pass
+    ports:
+      - "5432:5432"
+    networks:
+      - order-lab-network
+  rabbitmq:
+    build:
+      context: .
+      dockerfile: Dockerfile.rabbitmq
+    image: order-lab-rabbitmq:local
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - order-lab-network
+networks:
+  order-lab-network:
+    driver: bridge
