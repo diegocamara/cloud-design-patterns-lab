@@ -12,6 +12,7 @@ The idea is to add subprojects gradually as each pattern is studied. Each folder
 | [02-circuit-breaker](./02-circuit-breaker) | Circuit Breaker |
 | [03-bulkhead](./03-bulkhead) | Bulkhead |
 | [04-queue-based-load-leveling](./04-queue-based-load-leveling) | Queue-Based Load Leveling |
+| [05-timeout](./05-timeout) | Timeout |
 
 ## Goal
 
