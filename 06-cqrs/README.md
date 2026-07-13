@@ -21,15 +21,15 @@ flowchart LR
         mongo[(MongoDB)]
     end
 
-    client -->|POST /players| writeApi
-    client -->|POST /players/{id}/stages/{code}/completion| writeApi
-    writeApi -->|transaction| postgres
+    client -->|"POST /players"| writeApi
+    client -->|"POST /players/{id}/stages/{code}/completion"| writeApi
+    writeApi -->|"transaction"| postgres
     postgres --> outbox
-    outbox -->|PlayerCreatedMessage<br/>StageCompletedMessage| kafka
+    outbox -->|"PlayerCreatedMessage, StageCompletedMessage"| kafka
     kafka --> reader
-    reader -->|projection| mongo
-    client -->|GET /players/{id}/profile| reader
-    client -->|GET /ranking/players| reader
+    reader -->|"projection"| mongo
+    client -->|"GET /players/{id}/profile"| reader
+    client -->|"GET /ranking/players"| reader
 ```
 
 ## Modules
