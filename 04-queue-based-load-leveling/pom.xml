@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>org.example</groupId>
-    <artifactId>orders</artifactId>
+    <artifactId>04-queue-based-load-leveling</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>04-queue-based-load-leveling</name>
     <description>04-queue-based-load-leveling</description>
