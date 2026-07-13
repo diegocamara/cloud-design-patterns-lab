@@ -1,0 +1,25 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: game-progression-write
+
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/game_progression_write_db}
+    username: ${DATABASE_USERNAME:game_progression_write_user}
+    password: ${DATABASE_PASSWORD:game_progression_write_pass}
+
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:29092}
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
+app:
+  kafka:
+    topic: game.progression.events
+
+  outbox:
+    fixed-delay-ms: 1000
+    batch-size: 100
+    max-attempts: 5

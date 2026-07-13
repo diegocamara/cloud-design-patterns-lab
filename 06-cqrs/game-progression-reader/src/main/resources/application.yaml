@@ -1,0 +1,22 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: game-progression-reader
+
+  mongodb:
+    uri: ${MONGODB_URI:mongodb://localhost:27017/progression_read_db?replicaSet=rs0&uuidRepresentation=standard}
+
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:29092}
+    consumer:
+      group-id: game-progression-reader
+      auto-offset-reset: earliest
+      enable-auto-commit: false
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    listener:
+      ack-mode: record
+app:
+  kafka:
+    topic: game.progression.events
