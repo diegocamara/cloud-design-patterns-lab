@@ -17,10 +17,10 @@ public class ApiExceptionHandler {
 
   @ExceptionHandler(
       org.example.gameprogressionreader.infrastructure.processor.exception
-          .PlayerProfileNotFoundException.class)
+          .PlayerProfileProjectionNotFoundException.class)
   public ProblemDetail handleProcessorPlayerNotFound(
       org.example.gameprogressionreader.infrastructure.processor.exception
-              .PlayerProfileNotFoundException
+              .PlayerProfileProjectionNotFoundException
           exception) {
     return playerProfileNotFoundProblem(exception.getMessage());
   }

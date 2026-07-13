@@ -11,21 +11,8 @@
     <groupId>org.example</groupId>
     <artifactId>game-progression-reader</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>game-progression-reader</name>
-    <description>game-progression-reader</description>
-    <url/>
-    <licenses>
-        <license/>
-    </licenses>
-    <developers>
-        <developer/>
-    </developers>
-    <scm>
-        <connection/>
-        <developerConnection/>
-        <tag/>
-        <url/>
-    </scm>
+    <name>Game Progression Reader API</name>
+    <description>Query-side projection API for the game progression CQRS example.</description>
     <properties>
         <java.version>25</java.version>
     </properties>

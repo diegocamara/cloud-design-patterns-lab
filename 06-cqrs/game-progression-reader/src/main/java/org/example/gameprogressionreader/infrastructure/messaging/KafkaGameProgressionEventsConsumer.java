@@ -3,8 +3,8 @@ package org.example.gameprogressionreader.infrastructure.messaging;
 import com.mongodb.DuplicateKeyException;
 import java.nio.charset.StandardCharsets;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
-import org.example.PlayerCreatedMessage;
-import org.example.StageCompletedMessage;
+import org.example.gameprogression.contracts.PlayerCreatedMessage;
+import org.example.gameprogression.contracts.StageCompletedMessage;
 import org.example.gameprogressionreader.infrastructure.messaging.exceptions.MissingEventTypeHeaderException;
 import org.example.gameprogressionreader.infrastructure.processor.GameProgressionProjectionProcessor;
 import org.slf4j.Logger;
@@ -15,10 +15,10 @@ import tools.jackson.core.JacksonException;
 import tools.jackson.databind.ObjectMapper;
 
 @Component
-public class KafkaGameProgressingEventsConsumer {
+public class KafkaGameProgressionEventsConsumer {
 
   private static final Logger LOGGER =
-      LoggerFactory.getLogger(KafkaGameProgressingEventsConsumer.class);
+      LoggerFactory.getLogger(KafkaGameProgressionEventsConsumer.class);
 
   private static final String EVENT_TYPE_HEADER = "eventType";
 
@@ -29,7 +29,7 @@ public class KafkaGameProgressingEventsConsumer {
   private final ObjectMapper objectMapper;
   private final GameProgressionProjectionProcessor gameProgressionProjectionProcessor;
 
-  public KafkaGameProgressingEventsConsumer(
+  public KafkaGameProgressionEventsConsumer(
       ObjectMapper objectMapper,
       GameProgressionProjectionProcessor gameProgressionProjectionProcessor) {
     this.objectMapper = objectMapper;
@@ -48,7 +48,7 @@ public class KafkaGameProgressingEventsConsumer {
         case STAGE_COMPLETED_MESSAGE -> consumeStageCompletedMessage(record.value());
       }
     } catch (DuplicateKeyException duplicateKeyException) {
-      LOGGER.warn("Duplicate key found in record: {}", record.value());
+      LOGGER.warn("Duplicate Kafka event ignored: {}", record.value());
     }
   }
 

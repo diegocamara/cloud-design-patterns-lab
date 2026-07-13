@@ -1,8 +1,8 @@
 package org.example.gameprogressionwrite.infrastructure.eventpublisher;
 
 import java.util.Collection;
-import org.example.PlayerCreatedMessage;
-import org.example.StageCompletedMessage;
+import org.example.gameprogression.contracts.PlayerCreatedMessage;
+import org.example.gameprogression.contracts.StageCompletedMessage;
 import org.example.gameprogressionwrite.application.port.DomainEventsPublisher;
 import org.example.gameprogressionwrite.domain.event.DomainEvent;
 import org.example.gameprogressionwrite.domain.event.PlayerCreated;

@@ -10,7 +10,8 @@
     </parent>
 
     <artifactId>game-progression-contracts</artifactId>
-    <name>Archetype - game-progression-contracts</name>
+    <name>Game Progression Contracts</name>
+    <description>Shared integration event contracts for the game progression CQRS example.</description>
 
     <properties>
         <maven.compiler.release>25</maven.compiler.release>

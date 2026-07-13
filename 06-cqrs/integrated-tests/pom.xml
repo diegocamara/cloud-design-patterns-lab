@@ -7,8 +7,8 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
     <artifactId>integrated-tests</artifactId>
-    <name>Integrated Tests - 06-cqrs</name>
-    <url>http://maven.apache.org</url>
+    <name>Game Progression Integrated Tests</name>
+    <description>Black-box integration tests for the game progression CQRS example.</description>
 
     <properties>
         <java.version>25</java.version>

@@ -82,7 +82,7 @@ This avoids forcing one model to serve two different purposes. The write model s
 | Write model | `game-progression-write/src/main/java/.../domain/model` | Owns business rules for player progression, experience, level, and completed stages. |
 | Write repository | `game-progression-write/src/main/java/.../application/port/PlayersRepository` and `game-progression-write/src/main/java/.../infrastructure/repository` | Persists and loads the write model from PostgreSQL. |
 | Domain event | `game-progression-write/src/main/java/.../domain/event` | Captures something that already happened in the write model, such as `PlayerCreated` or `StageCompleted`. |
-| Integration event | `game-progression-contracts/src/main/java/org/example` | Message contract published through Kafka, such as `PlayerCreatedMessage` or `StageCompletedMessage`. |
+| Integration event | `game-progression-contracts/src/main/java/org/example/gameprogression/contracts` | Message contract published through Kafka, such as `PlayerCreatedMessage` or `StageCompletedMessage`. |
 | Outbox | `game-progression-write/src/main/java/.../infrastructure/repository/springdatajpa/model/OutboxEventEntity` | Stores integration events in PostgreSQL before asynchronous publication. |
 | Event publisher | `game-progression-write/src/main/java/.../infrastructure/scheduler/OutboxEventsScheduler` | Publishes pending outbox events to Kafka with event metadata headers. |
 | Event consumer | `game-progression-reader/src/main/java/.../infrastructure/messaging` | Reads Kafka records and dispatches them to projection processors. |
@@ -202,7 +202,7 @@ When a command endpoint returns successfully, the project guarantees that:
 At that exact moment, the MongoDB projection may still be stale. The read side only catches up after:
 
 1. `OutboxEventsScheduler` publishes the pending outbox event to Kafka.
-2. `KafkaGameProgressingEventsConsumer` consumes the Kafka record.
+2. `KafkaGameProgressionEventsConsumer` consumes the Kafka record.
 3. The projection processor updates `PlayerProfileDocument` in MongoDB.
 4. The reader API starts returning the updated profile or ranking.
 

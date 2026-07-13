@@ -1,6 +1,6 @@
 package org.example.gameprogressionreader.infrastructure.processor;
 
-import org.example.PlayerCreatedMessage;
+import org.example.gameprogression.contracts.PlayerCreatedMessage;
 import org.example.gameprogressionreader.infrastructure.repository.springdatamongo.SpringDataMongoPlayerProfilesRepository;
 import org.example.gameprogressionreader.infrastructure.repository.springdatamongo.model.PlayerProfileDocument;
 import org.example.gameprogressionreader.infrastructure.service.ProcessedEventRegister;

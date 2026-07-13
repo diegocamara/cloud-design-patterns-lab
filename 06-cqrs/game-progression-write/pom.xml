@@ -11,21 +11,8 @@
     <groupId>org.example</groupId>
     <artifactId>game-progression-write</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>game-progression-write</name>
-    <description>game-progression-write</description>
-    <url/>
-    <licenses>
-        <license/>
-    </licenses>
-    <developers>
-        <developer/>
-    </developers>
-    <scm>
-        <connection/>
-        <developerConnection/>
-        <tag/>
-        <url/>
-    </scm>
+    <name>Game Progression Write API</name>
+    <description>Command-side API for the game progression CQRS example.</description>
     <properties>
         <java.version>25</java.version>
     </properties>

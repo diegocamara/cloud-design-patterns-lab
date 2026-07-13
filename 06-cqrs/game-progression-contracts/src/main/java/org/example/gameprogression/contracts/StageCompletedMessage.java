@@ -1,4 +1,4 @@
-package org.example;
+package org.example.gameprogression.contracts;
 
 import java.time.Instant;
 import java.util.UUID;

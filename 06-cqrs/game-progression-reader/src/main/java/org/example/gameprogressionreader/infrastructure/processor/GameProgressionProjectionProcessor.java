@@ -1,7 +1,7 @@
 package org.example.gameprogressionreader.infrastructure.processor;
 
-import org.example.PlayerCreatedMessage;
-import org.example.StageCompletedMessage;
+import org.example.gameprogression.contracts.PlayerCreatedMessage;
+import org.example.gameprogression.contracts.StageCompletedMessage;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 

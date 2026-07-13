@@ -1,7 +1,7 @@
 package org.example.gameprogressionreader.infrastructure.processor;
 
-import org.example.StageCompletedMessage;
-import org.example.gameprogressionreader.infrastructure.processor.exception.PlayerProfileNotFoundException;
+import org.example.gameprogression.contracts.StageCompletedMessage;
+import org.example.gameprogressionreader.infrastructure.processor.exception.PlayerProfileProjectionNotFoundException;
 import org.example.gameprogressionreader.infrastructure.repository.springdatamongo.SpringDataMongoPlayerProfilesRepository;
 import org.example.gameprogressionreader.infrastructure.service.ProcessedEventRegister;
 import org.springframework.stereotype.Component;
@@ -25,7 +25,7 @@ public class StageCompletedProjectionProcessor {
     final var playerProfileDocument =
         this.springDataMongoPlayerProfilesRepository
             .findById(event.playerId())
-            .orElseThrow(() -> new PlayerProfileNotFoundException(event.playerId()));
+            .orElseThrow(() -> new PlayerProfileProjectionNotFoundException(event.playerId()));
 
     playerProfileDocument.completeStage(
         event.stageCode(),
