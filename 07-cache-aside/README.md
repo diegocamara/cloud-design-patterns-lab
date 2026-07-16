@@ -23,7 +23,7 @@ flowchart LR
     repository -->|"evict product:{id}"| redis
 ```
 
-## Design Choice
+## Design choice
 
 The cache is intentionally kept in the persistence adapter, not in the application use cases.
 
@@ -36,7 +36,7 @@ This keeps:
 - HTTP controllers focused on request/response handling;
 - Cache-Aside behavior isolated in the infrastructure layer.
 
-## Main Flow
+## Main flow
 
 For `GET /products/{id}`:
 
@@ -52,7 +52,7 @@ For `PUT /products/{id}`:
 2. The updated product is saved in PostgreSQL.
 3. The cached key is evicted so the next read reloads the current value.
 
-## Test Scenarios
+## Test scenarios
 
 The integration tests are in [`CacheAsideIntegratedTests`](./src/test/java/org/example/cacheaside/CacheAsideIntegratedTests.java).
 
@@ -70,7 +70,7 @@ They cover:
 - repeated lookups for an unknown product do not create negative cache;
 - manually evicted cache is repopulated on the next lookup.
 
-## Integration Test Environment
+## Integration test environment
 
 The test suite starts PostgreSQL and Redis through Docker Compose using `DockerComposeEnvironmentExtension`.
 
@@ -82,7 +82,7 @@ The tests use:
 - `RedisExtension` to clean and inspect Redis;
 - the real HTTP API running on a random port.
 
-## Running Locally
+## Running locally
 
 Start the local environment:
 
@@ -102,7 +102,7 @@ Stop the environment:
 docker compose -f env/docker-compose.yml down
 ```
 
-## Running Tests
+## Running tests
 
 In this subproject folder, run:
 
@@ -118,7 +118,7 @@ To keep the containers running after the tests:
 ./mvnw test -Dintegration.environment.keep-running=true
 ```
 
-## Manual API Examples
+## Manual API examples
 
 Create a product:
 

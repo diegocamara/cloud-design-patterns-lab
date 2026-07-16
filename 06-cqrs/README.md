@@ -1,4 +1,4 @@
-# Game Progression CQRS Lab
+# 06 - CQRS
 
 This project is a practical CQRS example for a game progression domain. It keeps command handling and query handling in separate applications, persists each side in a database shaped for its own needs, and connects both sides through domain events.
 
@@ -40,7 +40,7 @@ flowchart LR
 - `integrated-tests`: black-box integration tests that validate APIs, PostgreSQL, MongoDB, and Kafka.
 - `env`: local Docker Compose environment for manual development.
 
-## CQRS Practices Demonstrated
+## CQRS practices demonstrated
 
 - Separate write and read applications.
 - Separate persistence models: PostgreSQL for the command model, MongoDB for the query model.
@@ -51,7 +51,7 @@ flowchart LR
 - Reader-side idempotency avoids duplicating already processed events.
 - Integration tests validate eventual consistency instead of assuming synchronous projection.
 
-## Why Separate Write and Read Sides
+## Why separate write and read sides
 
 The separation is useful because commands and queries usually have different needs.
 
@@ -73,7 +73,7 @@ On the read side, the project can focus on:
 
 This avoids forcing one model to serve two different purposes. The write model stays expressive for business decisions, while the read model stays convenient and efficient for API responses.
 
-## CQRS Vocabulary in This Project
+## CQRS vocabulary in this project
 
 | Concept | Where to look | Responsibility |
 | --- | --- | --- |
@@ -91,9 +91,9 @@ This avoids forcing one model to serve two different purposes. The write model s
 | Query handler | `game-progression-reader/src/main/java/.../application/query/handler` | Reads projections and returns query models for the reader API, such as `GetPlayerProfileQueryHandler` and `GetPlayersRankingQueryHandler`. |
 | Idempotency register | `ProcessedEventDocument` and `ProcessedEventRegister` | Records already processed event IDs so repeated events do not duplicate projections. |
 
-## Main Flows
+## Main flows
 
-### Create Player
+### Create player
 
 1. `POST /players` is received by the write API.
 2. The write model validates and persists the player in PostgreSQL.
@@ -101,7 +101,7 @@ This avoids forcing one model to serve two different purposes. The write model s
 4. The outbox scheduler publishes the event to Kafka.
 5. The reader consumes the event and creates a MongoDB player profile projection.
 
-### Complete Stage
+### Complete stage
 
 1. `POST /players/{playerId}/stages/{stageCode}/completion` is received by the write API.
 2. The write model validates the player and stage completion.
@@ -110,7 +110,7 @@ This avoids forcing one model to serve two different purposes. The write model s
 5. The outbox scheduler publishes the event to Kafka.
 6. The reader updates the MongoDB profile and ranking projection.
 
-## Running Locally
+## Running locally
 
 Start the full local environment:
 
@@ -133,7 +133,7 @@ Stop the environment:
 docker compose -f env/docker-compose.yml down
 ```
 
-## Running Integration Tests
+## Running integration tests
 
 The integration tests can start their own Docker Compose environment with Testcontainers:
 
@@ -159,7 +159,7 @@ The tests cover:
 - ranking projection
 - ranking limit
 
-## Manual API Examples
+## Manual API examples
 
 Create a player:
 
@@ -189,7 +189,7 @@ Get ranking:
 curl -i 'http://localhost:8081/ranking/players?limit=10'
 ```
 
-## Consistency Model
+## Consistency model
 
 This example intentionally uses eventual consistency between the write side and the read side.
 
