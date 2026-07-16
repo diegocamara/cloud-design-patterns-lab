@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: 07-cache-aside
+
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/products_db}
+    username: ${DATABASE_USERNAME:products_user}
+    password: ${DATABASE_PASSWORD:products_pass}
+
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
