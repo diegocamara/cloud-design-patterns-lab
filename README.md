@@ -14,6 +14,7 @@ The idea is to add subprojects gradually as each pattern is studied. Each folder
 | [04-queue-based-load-leveling](./04-queue-based-load-leveling) | Queue-Based Load Leveling |
 | [05-timeout](./05-timeout) | Timeout |
 | [06-cqrs](./06-cqrs) | CQRS |
+| [07-cache-aside](./07-cache-aside) | Cache-Aside |
 
 ## Goal
 
