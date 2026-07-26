@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: 08-idempotency
+
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/idempotency_db}
+    username: ${DATABASE_USERNAME:idempotency_user}
+    password: ${DATABASE_PASSWORD:idempotency_pass}
+
+  rabbitmq:
+    host: ${RABBITMQ_HOST:localhost}
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_USERNAME:idempotency_user}
+    password: ${RABBITMQ_PASSWORD:idempotency_pass}
+    virtual-host: ${RABBITMQ_VHOST:idempotency}
